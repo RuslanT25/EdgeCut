@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EdgeCut.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SliderController : Controller
     {
         // GET: SliderController
