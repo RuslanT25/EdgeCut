@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdgeCut", "EdgeCut.csproj", "{ADBDF41A-243B-406A-BDF9-C0D84A1C2D1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADBDF41A-243B-406A-BDF9-C0D84A1C2D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADBDF41A-243B-406A-BDF9-C0D84A1C2D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADBDF41A-243B-406A-BDF9-C0D84A1C2D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADBDF41A-243B-406A-BDF9-C0D84A1C2D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DBB7904-EA15-4F15-9D71-12A6CFDEC996}
+	EndGlobalSection
+EndGlobal
