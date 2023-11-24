@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EdgeCut.Areas.Admin.Controllers;
+using EdgeCut.Areas.Admin.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EdgeCut.DAL
 {
@@ -6,7 +8,7 @@ namespace EdgeCut.DAL
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-                
         }
+
     }
 }

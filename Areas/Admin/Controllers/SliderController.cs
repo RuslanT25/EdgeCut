@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EdgeCut.DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EdgeCut.Areas.Admin.Controllers
@@ -6,6 +7,12 @@ namespace EdgeCut.Areas.Admin.Controllers
     [Area("Admin")]
     public class SliderController : Controller
     {
+        readonly ApplicationContext _context;
+        public SliderController(ApplicationContext context)
+        {
+            _context = context;
+        }
+
         // GET: SliderController
         public ActionResult Index()
         {
