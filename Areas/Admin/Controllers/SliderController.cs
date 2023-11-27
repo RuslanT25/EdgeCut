@@ -1,4 +1,6 @@
 ﻿using EdgeCut.DAL;
+using EdgeCut.Models;
+using EdgeCut.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,15 +10,19 @@ namespace EdgeCut.Areas.Admin.Controllers
     public class SliderController : Controller
     {
         readonly ApplicationContext _context;
-        public SliderController(ApplicationContext context)
+        readonly IFileService _fileService;
+        public SliderController(ApplicationContext context, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
 
         // GET: SliderController
         public ActionResult Index()
         {
-            return View();
+            List<Slider> sliders = _context.Sliders.ToList();
+
+            return View(sliders);
         }
 
         // GET: SliderController/Details/5
@@ -34,15 +40,36 @@ namespace EdgeCut.Areas.Admin.Controllers
         // POST: SliderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(Slider slider)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(slider);
+                }
+
+                (int status, string message) = await _fileService.FileUpload("sliders", slider.File);
+                if (status == 0)
+                {
+                    ModelState.AddModelError("File", message);
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(slider);
+                }
+
+                slider.Image = message;
+
+                _context.Sliders.Add(slider);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return Content(ex.Message);
             }
         }
 

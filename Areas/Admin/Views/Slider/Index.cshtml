@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Slider>
 @{
     ViewData["Title"] = "Slider";
 }
@@ -13,6 +13,9 @@
                 <li class="breadcrumb-item"><a asp-action="index" asp-controller="dashboard">Dashboard</a></li>
                 <li class="breadcrumb-item active">Sliders</li>
             </ol>
+            <a class="btn btn-primary" asp-action="create" asp-controller="slider">
+                <i class="bx bx-plus"></i>
+            </a>
         </nav>
     </div><!-- End Page Title -->
 
@@ -36,26 +39,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>
-                                        <img src="~/uploads/sliders/" style="width : 70px"; height="70px"; border-radius="50%" />
-                                    </td>
-                                    <td>Title</td>
-                                    <td>Description</td>
-                                    <td>Created Time</td>
-                                    <td>
-                                        <a class="btn btn-info" asp-action="details" asp-route-id="1">
-                                            <i class="bx bx-info-circle"></i>
-                                        </a>
-                                        <a class="btn btn-success" asp-action="edit" asp-route-id="1">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
-                                        <a class="btn btn-danger" asp-action="delete" asp-route-id="1">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                @foreach (Slider slider in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@slider.Id/th>
+                                        <td>
+                                            <img src="~/uploads/sliders/@slider.Image" style="width : 70px" ; height="70px" ; border-radius="50%" />
+                                        </td>
+                                        <td>@slider.Title</td>
+                                        <td>@(slider.Description.Length > 50 ? slider.Description.Substring(0, 50) + "..." : slider.Description)</td>
+                                        <td>@slider.CreatedAt?.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <a class="btn btn-info" asp-action="details" asp-route-id="@slider.Id">
+                                                <i class="bx bx-info-circle"></i>
+                                            </a>
+                                            <a class="btn btn-success" asp-action="edit" asp-route-id="@slider.Id">
+                                                <i class="bx bx-edit"></i>
+                                            </a>
+                                            <a class="btn btn-danger" asp-action="delete" asp-route-id="@slider.Id">
+                                                <i class="bx bx-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->

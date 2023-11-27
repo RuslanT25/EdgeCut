@@ -1,5 +1,5 @@
 ﻿using EdgeCut.Areas.Admin.Controllers;
-using EdgeCut.Areas.Admin.Models;
+using EdgeCut.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EdgeCut.DAL
@@ -10,5 +10,6 @@ namespace EdgeCut.DAL
         {
         }
 
+        public DbSet<Slider> Sliders { get; set; }
     }
 }

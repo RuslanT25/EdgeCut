@@ -1,4 +1,5 @@
 using EdgeCut.DAL;
+using EdgeCut.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace EdgeCut
@@ -15,6 +16,7 @@ namespace EdgeCut
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MyCon"));
             });
+            builder.Services.AddScoped<IFileService, FileService>();
 
             var app = builder.Build();
 
@@ -34,13 +36,14 @@ namespace EdgeCut
             app.UseAuthorization();
 
             app.MapControllerRoute(
-                  name: "Admin",
-                  pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
-                );
+                 name: "Admin",
+                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+               );
 
-                app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
             app.Run();
         }
