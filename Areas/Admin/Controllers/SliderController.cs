@@ -3,6 +3,8 @@ using EdgeCut.Models;
 using EdgeCut.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace EdgeCut.Areas.Admin.Controllers
 {
@@ -26,9 +28,12 @@ namespace EdgeCut.Areas.Admin.Controllers
         }
 
         // GET: SliderController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            Slider slider = await _context.Sliders.FirstOrDefaultAsync(s => s.Id == id);
+            if (slider is null) return NotFound("Bu sekil tapilmadi");
+
+            return View(slider);
         }
 
         // GET: SliderController/Create

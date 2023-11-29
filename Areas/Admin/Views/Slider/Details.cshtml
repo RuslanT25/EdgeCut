@@ -1,7 +1,37 @@
 ﻿
+@model Slider
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="card">
+    <div class="card-header">Slider Details</div>
+    <div class="card-body">
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input class="form-control" value="@Model.Title" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <input class="form-control" value="@Model.Description" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">CreatedAt</label>
+            <input class="form-control" value="@Model.CreatedAt?.ToString("dd/MM/yyyy")" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">UpdatedAt</label>
+            <input class="form-control" value="@Model.UpdatedAt?.ToString("dd/MM/yyyy")" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            <div class="card-image">
+                <img width="150" height="150" src="~/uploads/sliders/@Model.Image" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-primary" asp-action="index" asp-controller="slider">Back</a>
+        </div>
+    </div>
 
+</div>
