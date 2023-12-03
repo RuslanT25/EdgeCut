@@ -1,7 +1,60 @@
-﻿
+﻿@model Slider
+
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+
+<div class="pagetitle">
+    <h1>Form Validation</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="index" asp-controller="Dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-action="index">Sliders</a></li>
+            <li class="breadcrumb-item active">Edit</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Slider Edit</h5><br />
+
+                    <!-- Custom Styled Validation -->
+                    <form method="post" class="row g-3 needs-validation" enctype="multipart/form-data">
+                        <div class="col-md-12">
+                            <label for="validationCustom01" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="validationCustom01" asp-for="Title">
+                            <span asp-validation-for="Title" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="validationCustom02" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="validationCustom02" asp-for="Description">
+                            <span asp-validation-for="Description" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Current Image</label>
+                            <div class="card-image">
+                                <img height="150" width="200" src="~/uploads/sliders/@Model.Image" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="validationCustom02" class="form-label">Image</label>
+                            <input type="file" accept=".png,.jpg" class="form-control" asp-for="File">
+                            <span asp-validation-for="File" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Submit form</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 

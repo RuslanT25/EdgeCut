@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using NuGet.Protocol;
 
 namespace EdgeCut.Areas.Admin.Controllers
 {
@@ -22,7 +23,7 @@ namespace EdgeCut.Areas.Admin.Controllers
         // GET: SliderController
         public ActionResult Index()
         {
-            List<Slider> sliders = _context.Sliders.ToList();
+            List<Slider> sliders = _context.Sliders.Where(x => x.DeletedAt == null).ToList();
 
             return View(sliders);
         }
@@ -30,7 +31,7 @@ namespace EdgeCut.Areas.Admin.Controllers
         // GET: SliderController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            Slider slider = await _context.Sliders.FirstOrDefaultAsync(s => s.Id == id);
+            Slider slider = await _context.Sliders.Where(x => x.DeletedAt == null).FirstOrDefaultAsync(s => s.Id == id);
             if (slider is null) return NotFound("Bu sekil tapilmadi");
 
             return View(slider);
@@ -69,54 +70,87 @@ namespace EdgeCut.Areas.Admin.Controllers
 
                 _context.Sliders.Add(slider);
                 await _context.SaveChangesAsync();
+                TempData["Message"] = "Slider has ben created successfully";
 
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Content(ex.Message);
             }
         }
 
         // GET: SliderController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            Slider slider = await _context.Sliders.Where(x => x.DeletedAt == null).FirstOrDefaultAsync(s => s.Id == id);
+            if (slider == null) return NotFound();
+            return View(slider);
         }
 
         // POST: SliderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, Slider model)
         {
             try
             {
+                Slider slider = await _context.Sliders.Where(x => x.DeletedAt == null).FirstOrDefaultAsync(s => s.Id == id);
+                if (slider == null) return NotFound();
+                if (model.File != null)
+                {
+                    (int status, string message) = await _fileService.FileUpload("sliders", model.File);
+                    if (status == 0)
+                    {
+                        ModelState.AddModelError("File", message);
+                        return View(slider);
+                    }
+
+                    _fileService.DeleteFile("sliders", slider.Image);
+                    slider.Image = message;
+                }
+
+                slider.Title = model.Title;
+                slider.Description = model.Description;
+                slider.UpdatedAt = DateAndTime.Now;
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "Slider has ben updated successfully";
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return Content(ex.Message);
             }
-        }
-
-        // GET: SliderController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         // POST: SliderController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Slider slider = await _context.Sliders.FirstOrDefaultAsync(s => s.Id == id);
+                if (slider == null) return NotFound();
+
+                slider.DeletedAt = DateAndTime.Now;
+                _fileService.DeleteFile("sliders", slider.Image);
+                _context.SaveChangesAsync();
+
+                return Json(new
+                {
+                    Status = true,
+                    Message = "Slider has been deleted"
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return Json(new
+                {
+                    Status = false,
+                    Message = "Something went wrong"
+                });
             }
         }
     }

@@ -1,75 +1,163 @@
 ﻿@model List<Slider>
 @{
     ViewData["Title"] = "Slider";
-}
+} 
 
+<input type="hidden" id="message" value="@TempData["Message"]" />
+<div class="pagetitle">
+    <h1>Sliders</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="index" asp-controller="dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item active">Sliders</li>
+        </ol>
+        <a class="btn btn-primary" asp-action="create" asp-controller="slider">
+            <i class="bx bx-plus"></i>
+        </a>
+    </nav>
+</div><!-- End Page Title -->
 
-<main id="main" class="main">
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
 
-    <div class="pagetitle">
-        <h1>Sliders</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-action="index" asp-controller="dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item active">Sliders</li>
-            </ol>
-            <a class="btn btn-primary" asp-action="create" asp-controller="slider">
-                <i class="bx bx-plus"></i>
-            </a>
-        </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Sliders</h5>
-                        <!-- Table with stripped rows -->
-                        <table class="table table-striped">
-                            <thead>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sliders</h5>
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Created Time</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Slider slider in Model)
+                            {
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Created Time</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="row">@slider.Id/th>
+                                    <td>
+                                        <img src="~/uploads/sliders/@slider.Image" style="width : 70px" ; height="70px" ; border-radius="50%" />
+                                    </td>
+                                    <td>@slider.Title</td>
+                                    <td>@(slider.Description.Length > 50 ? slider.Description.Substring(0, 50) + "..." : slider.Description)</td>
+                                    <td>@slider.CreatedAt?.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <a class="btn btn-info" asp-action="details" asp-route-id="@slider.Id">
+                                            <i class="bx bx-info-circle"></i>
+                                        </a>
+                                        <a class="btn btn-success" asp-action="edit" asp-route-id="@slider.Id">
+                                            <i class="bx bx-edit"></i>
+                                        </a>
+                                        <a onclick="deleteItem(@slider.Id)" class="btn btn-danger" asp-action="delete" asp-route-id="@slider.Id">
+                                            <i class="bx bx-trash"></i>
+                                        </a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (Slider slider in Model)
-                                {
-                                    <tr>
-                                        <th scope="row">@slider.Id/th>
-                                        <td>
-                                            <img src="~/uploads/sliders/@slider.Image" style="width : 70px" ; height="70px" ; border-radius="50%" />
-                                        </td>
-                                        <td>@slider.Title</td>
-                                        <td>@(slider.Description.Length > 50 ? slider.Description.Substring(0, 50) + "..." : slider.Description)</td>
-                                        <td>@slider.CreatedAt?.ToString("dd/MM/yyyy")</td>
-                                        <td>
-                                            <a class="btn btn-info" asp-action="details" asp-route-id="@slider.Id">
-                                                <i class="bx bx-info-circle"></i>
-                                            </a>
-                                            <a class="btn btn-success" asp-action="edit" asp-route-id="@slider.Id">
-                                                <i class="bx bx-edit"></i>
-                                            </a>
-                                            <a class="btn btn-danger" asp-action="delete" asp-route-id="@slider.Id">
-                                                <i class="bx bx-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <!-- End Table with stripped rows -->
-                    </div>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
                 </div>
-
             </div>
-        </div>
-    </section>
 
-</main>
+        </div>
+    </div>
+</section>
+
+@section CSS{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    }
+
+@section JS{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    @* DELETE ITEM sweet alert *@
+    <script>
+        function deleteItem(id) {
+            event.preventDefault();
+            let url = `/admin/slider/delete/${id}`;
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(url){
+                                                    .then(res => res.json())
+                            .then(data => {
+                                if (status == true) {
+                                    swalWithBootstrapButtons.fire({
+                                        title: "Deleted!",
+                                        text: data.message,
+                                        icon: "success"
+                                    });
+                                }
+                                setTimeout(() => window.location.reload(), 2000);
+                                                        else {
+                                    swalWithBootstrapButtons.fire({
+                                        title: "Deleted!",
+                                        text: data.message,
+                                        icon: "error"
+                                    });
+                                }
+                            });
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire({
+                            title: "Cancelled",
+                            text: "Slider didn't change",
+                            icon: "error"
+                        });
+                    }
+                });
+        }
+                                }
+    </script>
+
+            // SHOW TOAST MESSAGE
+    <script>
+        let message = $('#message').val()
+        if (message != '') {
+            toastr["success"](message)
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+        }
+    </script>
+    }
