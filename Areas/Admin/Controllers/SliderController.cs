@@ -21,9 +21,9 @@ namespace EdgeCut.Areas.Admin.Controllers
         }
 
         // GET: SliderController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Slider> sliders = _context.Sliders.Where(x => x.DeletedAt == null).ToList();
+            List<Slider> sliders = await _context.Sliders.Where(x => x.DeletedAt == null).ToListAsync();
 
             return View(sliders);
         }
@@ -85,6 +85,7 @@ namespace EdgeCut.Areas.Admin.Controllers
         {
             Slider slider = await _context.Sliders.Where(x => x.DeletedAt == null).FirstOrDefaultAsync(s => s.Id == id);
             if (slider == null) return NotFound();
+
             return View(slider);
         }
 
@@ -136,7 +137,7 @@ namespace EdgeCut.Areas.Admin.Controllers
 
                 slider.DeletedAt = DateAndTime.Now;
                 _fileService.DeleteFile("sliders", slider.Image);
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
                 return Json(new
                 {

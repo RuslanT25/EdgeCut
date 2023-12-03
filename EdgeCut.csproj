@@ -300,4 +300,8 @@
     <TypeScriptCompile Include="wwwroot\admin\assets\vendor\tinymce\tinymce.d.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\furnitures\" />
+  </ItemGroup>
+
 </Project>

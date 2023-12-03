@@ -1,17 +1,17 @@
-﻿@model List<Slider>
+﻿@model List<Furniture>
 @{
-    ViewData["Title"] = "Slider";
-} 
+    ViewData["Title"] = "Furniture";
+}
 
 <input type="hidden" id="message" value="@TempData["Message"]" />
 <div class="pagetitle">
-    <h1>Sliders</h1>
+    <h1>Furnitures</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-action="index" asp-controller="dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active">Sliders</li>
+            <li class="breadcrumb-item active">Furnitures</li>
         </ol>
-        <a class="btn btn-primary" asp-action="create" asp-controller="slider">
+        <a class="btn btn-primary" asp-action="create" asp-controller="furniture">
             <i class="bx bx-plus"></i>
         </a>
     </nav>
@@ -23,38 +23,36 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Sliders</h5>
+                    <h5 class="card-title">Furnitures</h5>
                     <!-- Table with stripped rows -->
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Created Time</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Slider slider in Model)
+                            @foreach (Furniture furniture in Model)
                             {
                                 <tr>
-                                    <th scope="row">@slider.Id/th>
+                                    <th scope="row">@furniture.Id/th>
                                     <td>
-                                        <img src="~/uploads/sliders/@slider.Image" style="width : 70px" ; height="70px" ; border-radius="50%" />
+                                        <img src="~/uploads/sliders/@furniture.Image" style="width : 70px" ; height="70px" ; border-radius="50%" />
                                     </td>
-                                    <td>@slider.Title</td>
-                                    <td>@(slider.Description.Length > 50 ? slider.Description.Substring(0, 50) + "..." : slider.Description)</td>
-                                    <td>@slider.CreatedAt?.ToString("dd/MM/yyyy")</td>
+                                    <td>@furniture.Name</td>
+                                    <td>@furniture.CreatedAt?.ToString("dd/MM/yyyy")</td>
                                     <td>
-                                        <a class="btn btn-info" asp-action="details" asp-route-id="@slider.Id">
+                                        <a class="btn btn-info" asp-action="details" asp-route-id="@furniture.Id">
                                             <i class="bx bx-info-circle"></i>
                                         </a>
-                                        <a class="btn btn-success" asp-action="edit" asp-route-id="@slider.Id">
+                                        <a class="btn btn-success" asp-action="edit" asp-route-id="@furniture.Id">
                                             <i class="bx bx-edit"></i>
                                         </a>
-                                        <a onclick="deleteItem(@slider.Id)" class="btn btn-danger" asp-action="delete" asp-route-id="@slider.Id">
+                                        <a onclick="deleteItem(@furniture.Id)" class="btn btn-danger" asp-action="delete" asp-route-id="@furniture.Id">
                                             <i class="bx bx-trash"></i>
                                         </a>
                                     </td>
@@ -102,7 +100,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(url){
-                                                    .then(res => res.json())
+                                                            .then(res => res.json())
                             .then(data => {
                                 if (status == true) {
                                     swalWithBootstrapButtons.fire({
@@ -112,7 +110,7 @@
                                     });
                                 }
                                 setTimeout(() => window.location.reload(), 2000);
-                                                        else {
+                                                                else {
                                     swalWithBootstrapButtons.fire({
                                         title: "Deleted!",
                                         text: data.message,
@@ -132,10 +130,10 @@
                     }
                 });
         }
-                                }
+                                        }
     </script>
 
-     // SHOW TOAST MESSAGE
+         // SHOW TOAST MESSAGE
     <script>
         let message = $('#message').val()
         if (message != '') {
