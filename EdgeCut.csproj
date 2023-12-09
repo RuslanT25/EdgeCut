@@ -301,6 +301,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\blogs\" />
     <Folder Include="wwwroot\uploads\furnitures\" />
   </ItemGroup>
 

@@ -16,7 +16,11 @@ namespace EdgeCut.Services
         }
         public void DeleteFile(string folder, string file)
         {
-            throw new NotImplementedException();
+            string fullPath = Path.Combine(_env.WebRootPath, "uploads", folder, file ?? "");
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
         }
 
         public async Task<(int, string)> FileUpload(string folder, IFormFile file)

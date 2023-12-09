@@ -1,0 +1,37 @@
+﻿
+@model Blog
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card">
+    <div class="card-header">Blog Details</div>
+    <div class="card-body">
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input class="form-control" value="@Model.Title" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea disabled class="form-control">@(Model.Description)</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">CreatedAt</label>
+            <input class="form-control" value="@Model.CreatedAt?.ToString("dd/MM/yyyy")" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">UpdatedAt</label>
+            <input class="form-control" value="@Model.UpdatedAt?.ToString("dd/MM/yyyy")" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            <div class="card-image">
+                <img width="150" height="150" src="~/uploads/blogs/@Model.Image" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-primary" asp-action="index" asp-controller="blog">Back</a>
+        </div>
+    </div>
+
+</div>

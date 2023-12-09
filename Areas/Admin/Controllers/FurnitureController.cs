@@ -47,9 +47,9 @@ namespace EdgeCut.Areas.Admin.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (furniture.File == null)
                 {
-                    return View(furniture);
+                    ModelState.AddModelError("File", "File is required");
                 }
 
                 (int status, string message) = await _fileService.FileUpload("furnitures", furniture.File);
@@ -104,7 +104,7 @@ namespace EdgeCut.Areas.Admin.Controllers
                         return View(furniture);
                     }
 
-                    _fileService.DeleteFile("sliders", furniture.Image);
+                    _fileService.DeleteFile("furnitures", furniture.Image);
                     furniture.Image = message;
                 }
 
@@ -122,9 +122,6 @@ namespace EdgeCut.Areas.Admin.Controllers
             }
         }
 
-        // POST: FurnitureController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -133,7 +130,7 @@ namespace EdgeCut.Areas.Admin.Controllers
                 if (furniture == null) return NotFound();
 
                 furniture.DeletedAt = DateAndTime.Now;
-                _fileService.DeleteFile("sliders", furniture.Image);
+                _fileService.DeleteFile("furnitures", furniture.Image);
                 await _context.SaveChangesAsync();
 
                 return Json(new

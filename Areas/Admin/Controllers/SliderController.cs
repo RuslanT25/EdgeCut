@@ -125,9 +125,6 @@ namespace EdgeCut.Areas.Admin.Controllers
             }
         }
 
-        // POST: SliderController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             try
