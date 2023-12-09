@@ -1,5 +1,7 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Home";
+    int counter = 0;
 }
 
 <!-- furniture section -->
@@ -15,131 +17,35 @@
             </p>
         </div>
         <div class="row">
-            <div class="col-md-6 col-lg-4">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/f1.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            brown Chair Design
-                        </h5>
-                        <div class="price_box">
-                            <h6 class="price_heading">
-                                <span>$</span> 100.00
-                            </h6>
-                            <a href="">
-                                Buy Now
-                            </a>
+            @foreach (Furniture furniture in Model.Furnitures)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="box">
+                        <div class="img-box">
+                            <img src="~/uploads/furnitures/@furniture.Image" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                @furniture.Name
+                            </h5>
+                            <div class="price_box">
+                                <h6 class="price_heading">
+                                    <span>$</span> @furniture.Price
+                                </h6>
+                                <a href="">
+                                    Buy Now
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/f2.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Double Bed Design
-                        </h5>
-                        <div class="price_box">
-                            <h6 class="price_heading">
-                                <span>$</span> 200.00
-                            </h6>
-                            <a href="">
-                                Buy Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/f3.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            House Chair Design
-                        </h5>
-                        <div class="price_box">
-                            <h6 class="price_heading">
-                                <span>$</span> 200.00
-                            </h6>
-                            <a href="">
-                                Buy Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/f4.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            brown Table Design
-                        </h5>
-                        <div class="price_box">
-                            <h6 class="price_heading">
-                                <span>$</span> 100.00
-                            </h6>
-                            <a href="">
-                                Buy Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/f5.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Blue Chair Design
-                        </h5>
-                        <div class="price_box">
-                            <h6 class="price_heading">
-                                <span>$</span> 200.00
-                            </h6>
-                            <a href="">
-                                Buy Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/f6.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Brown Table Design
-                        </h5>
-                        <div class="price_box">
-                            <h6 class="price_heading">
-                                <span>$</span> 200.00
-                            </h6>
-                            <a href="">
-                                Buy Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
 
 <!-- end furniture section -->
+
 <!-- about section -->
 
 <section class="about_section layout_padding long_section">
@@ -180,60 +86,27 @@
             </h2>
         </div>
         <div class="row">
-            <div class="col-md-6 col-lg-4 mx-auto">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/b1.jpg" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Look even slightly believable. If you are
-                        </h5>
-                        <p>
-                            alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-                        </p>
-                        <a href="">
-                            Read More
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mx-auto">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/b2.jpg" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Anything embarrassing hidden in the middle
-                        </h5>
-                        <p>
-                            alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-                        </p>
-                        <a href="">
-                            Read More
-                        </a>
+            @foreach (Blog blog in Model.Blogs)
+            {
+                <div class="col-md-6 col-lg-4 mx-auto">
+                    <div class="box">
+                        <div class="img-box">
+                            <img src="~/uploads/blogs/@blog.Image" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                @blog.Title
+                            </h5>
+                            <p>
+                                @blog.Description
+                            </p>
+                            <a href="">
+                                Read More
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mx-auto">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="~/front/images/b3.jpg" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Molestias magni natus dolores odio commodi. Quaerat!
-                        </h5>
-                        <p>
-                            alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-                        </p>
-                        <a href="">
-                            Read More
-                        </a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
@@ -250,78 +123,32 @@
         </div>
         <div id="carouselExample2Controls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row">
-                        <div class="col-md-11 col-lg-10 mx-auto">
-                            <div class="box">
-                                <div class="img-box">
-                                    <img src="~/front/images/client.jpg" alt="" />
-                                </div>
-                                <div class="detail-box">
-                                    <div class="name">
-                                        <i class="fa fa-quote-left" aria-hidden="true"></i>
-                                        <h6>
-                                            Siaalya
-                                        </h6>
+                @foreach (Testimonial testimonial in Model.Testimonials)
+                {
+                    ++counter;
+                    <div class="carousel-item @(counter == 1 ? "active" : "") ">
+                        <div class="row">
+                            <div class="col-md-11 col-lg-10 mx-auto">
+                                <div class="box">
+                                    <div class="img-box">
+                                        <img src="~/uploads/testimonials/@testimonial.Image" alt="" />
                                     </div>
-                                    <p>
-                                        It is a long established fact that a reader will be
-                                        distracted by the readable cIt is a long established fact
-                                        that a reader will be distracted by the readable c
-                                    </p>
+                                    <div class="detail-box">
+                                        <div class="name">
+                                            <i class="fa fa-quote-left" aria-hidden="true"></i>
+                                            <h6>
+                                                @testimonial.Name
+                                            </h6>
+                                        </div>
+                                        <p>
+                                            @Html.Raw(testimonial.Description)
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-md-11 col-lg-10 mx-auto">
-                            <div class="box">
-                                <div class="img-box">
-                                    <img src="~/front/images/client.jpg" alt="" />
-                                </div>
-                                <div class="detail-box">
-                                    <div class="name">
-                                        <i class="fa fa-quote-left" aria-hidden="true"></i>
-                                        <h6>
-                                            Siaalya
-                                        </h6>
-                                    </div>
-                                    <p>
-                                        It is a long established fact that a reader will be
-                                        distracted by the readable cIt is a long established fact
-                                        that a reader will be distracted by the readable c
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-md-11 col-lg-10 mx-auto">
-                            <div class="box">
-                                <div class="img-box">
-                                    <img src="~/front/images/client.jpg" alt="" />
-                                </div>
-                                <div class="detail-box">
-                                    <div class="name">
-                                        <i class="fa fa-quote-left" aria-hidden="true"></i>
-                                        <h6>
-                                            Siaalya
-                                        </h6>
-                                    </div>
-                                    <p>
-                                        It is a long established fact that a reader will be
-                                        distracted by the readable cIt is a long established fact
-                                        that a reader will be distracted by the readable c
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
             <div class="carousel_btn-container">
                 <a class="carousel-control-prev" href="#carouselExample2Controls" role="button" data-slide="prev">
